@@ -40,9 +40,9 @@ class MainWindow : JFrame(), ActionListener {
     private lateinit var red: JLabel
     private lateinit var blue: JLabel
     private lateinit var green: JLabel
-    private lateinit var redNumber1: JLabel
-    private lateinit var blueNumber2: JLabel
-    private lateinit var greenNumber3: JLabel
+    private lateinit var redNumber1: TextField
+    private lateinit var blueNumber2: TextField
+    private lateinit var greenNumber3: TextField
     private lateinit var colourVisual: JPanel
     private lateinit var colourID: JLabel
 
@@ -76,27 +76,46 @@ class MainWindow : JFrame(), ActionListener {
     private fun addControls() {
         val defaultFont = Font(Font.SANS_SERIF, Font.PLAIN, 30)
 
+        colourVisual = JPanel()
+        colourVisual.bounds = Rectangle(35, 25, 430, 110)
+        colourVisual.font = defaultFont
+        colourVisual.background = Color.BLACK
+        add(colourVisual)
+
+        colourID = JLabel("....................................")
+        colourID.horizontalAlignment = SwingConstants.CENTER
+        colourID.bounds = Rectangle(95, 150, 310, 60)
+        colourID.font = defaultFont
+        add(colourID)
+
         red = JLabel("R")
         red.horizontalAlignment = SwingConstants.CENTER
         red.bounds = Rectangle(25, 225, 30, 40)
         red.font = defaultFont
+        red.background = Color.RED
+        red.foreground = Color.RED
         add(red)
 
-        redNumber1 = JLabel("255")
-        redNumber1.horizontalAlignment = SwingConstants.CENTER
+        redNumber1 = TextField("0")
         redNumber1.bounds = Rectangle(55, 225, 70, 40)
         redNumber1.font = defaultFont
+        redNumber1.background = Color.RED
+        redNumber1.foreground = Color.WHITE
         add(redNumber1)
 
         redPLus = JButton("<")
         redPLus.bounds = Rectangle(25,275,40,50)
         redPLus.font = defaultFont
+        redPLus.background = Color.RED
+        redPLus.foreground = Color.WHITE
         redPLus.addActionListener(this)     // Handle any clicks
         add(redPLus)
 
         redMinus = JButton(">")
         redMinus.bounds = Rectangle(75,275,40,50)
         redMinus.font = defaultFont
+        redMinus.background = Color.RED
+        redMinus.foreground = Color.WHITE
         redMinus.addActionListener(this)     // Handle any clicks
         add(redMinus)
 
@@ -104,23 +123,30 @@ class MainWindow : JFrame(), ActionListener {
         green.horizontalAlignment = SwingConstants.CENTER
         green.bounds = Rectangle(195, 225, 30, 40)
         green.font = defaultFont
+        green.background = Color.GREEN
+        green.foreground = Color.GREEN
         add(green)
 
-        greenNumber3 = JLabel("255")
-        greenNumber3.horizontalAlignment = SwingConstants.CENTER
+        greenNumber3 = TextField("0")
         greenNumber3.bounds = Rectangle(225, 225, 70, 40)
         greenNumber3.font = defaultFont
+        greenNumber3.background = Color.GREEN
+        greenNumber3.foreground = Color.WHITE
         add(greenNumber3)
 
         greenPlus = JButton("<")
         greenPlus.bounds = Rectangle(195,275,40,50)
         greenPlus.font = defaultFont
+        greenPlus.background = Color.GREEN
+        greenPlus.foreground = Color.WHITE
         greenPlus.addActionListener(this)     // Handle any clicks
         add(greenPlus)
 
         greenMinus = JButton(">")
         greenMinus.bounds = Rectangle(245,275,40,50)
         greenMinus.font = defaultFont
+        greenMinus.background = Color.GREEN
+        greenMinus.foreground = Color.WHITE
         greenMinus.addActionListener(this)     // Handle any clicks
         add(greenMinus)
 
@@ -128,23 +154,30 @@ class MainWindow : JFrame(), ActionListener {
         blue.horizontalAlignment = SwingConstants.CENTER
         blue.bounds = Rectangle(365, 225, 30, 40)
         blue.font = defaultFont
+        blue.background = Color.BLUE
+        blue.foreground = Color.BLUE
         add(blue)
 
-        blueNumber2 = JLabel("255")
-        blueNumber2.horizontalAlignment = SwingConstants.CENTER
+        blueNumber2 = TextField("0")
         blueNumber2.bounds = Rectangle(395, 225, 70, 40)
         blueNumber2.font = defaultFont
+        blueNumber2.background = Color.blue
+        blueNumber2.foreground = Color.WHITE
         add(blueNumber2)
 
         bluePlus = JButton("<")
         bluePlus.bounds = Rectangle(365,275,40,50)
         bluePlus.font = defaultFont
+        bluePlus.background = Color.BLUE
+        bluePlus.foreground = Color.WHITE
         bluePlus.addActionListener(this)     // Handle any clicks
         add(bluePlus)
 
         blueMinus = JButton(">")
         blueMinus.bounds = Rectangle(415,275,40,50)
         blueMinus.font = defaultFont
+        blueMinus.background = Color.BLUE
+        blueMinus.foreground = Color.WHITE
         blueMinus.addActionListener(this)     // Handle any clicks
         add(blueMinus)
     }
@@ -155,9 +188,33 @@ class MainWindow : JFrame(), ActionListener {
      */
     override fun actionPerformed(e: ActionEvent?) {
         when (e?.source) {
-            red -> {
-                println("Hello Button Pressed!!")
-         }
+
+              redPLus -> {
+                  redNumber1.text = redNumber1.text.toInt().inc().toString()
+                  if(redNumber1.text.toInt() > 255)redNumber1.text = "0"
+              }
+              redMinus -> {
+                  redNumber1.text = redNumber1.text.toInt().dec().toString()
+                  if(redNumber1.text.toInt() < 0)redNumber1.text = "255"
+              }
+              greenPlus -> {
+                  greenNumber3.text = greenNumber3.text.toInt().inc().toString()
+                  if(greenNumber3.text.toInt() > 255)greenNumber3.text = "0"
+              }
+              greenMinus -> {
+                  greenNumber3.text = greenNumber3.text.toInt().dec().toString()
+                  if(greenNumber3.text.toInt() < 0)greenNumber3.text = "255"
+              }
+              bluePlus -> {
+                  blueNumber2.text = blueNumber2.text.toInt().inc().toString()
+                  if(blueNumber2.text.toInt() > 255)blueNumber2.text = "0"
+              }
+              blueMinus -> {
+                  blueNumber2.text = blueNumber2.text.toInt().dec().toString()
+                  if(blueNumber2.text.toInt() < 0)blueNumber2.text = "255"
+              }
+
+
         }
     }
 
