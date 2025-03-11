@@ -12,6 +12,7 @@ import com.formdev.flatlaf.FlatDarkLaf
 import java.awt.*
 import java.awt.event.*
 import javax.swing.*
+import javax.swing.plaf.ColorChooserUI
 
 
 /**
@@ -28,7 +29,7 @@ fun main() {
  * Defines the UI and responds to events
  * The app model should be passwd as an argument
  */
-class MainWindow : JFrame(), ActionListener {
+class MainWindow : JFrame(), ActionListener, KeyListener {
 
     // Fields to hold the UI elements
     private lateinit var redPLus: JButton
@@ -79,7 +80,7 @@ class MainWindow : JFrame(), ActionListener {
         colourVisual = JPanel()
         colourVisual.bounds = Rectangle(35, 25, 430, 110)
         colourVisual.font = defaultFont
-        colourVisual.background = Color.BLACK
+        colourVisual.background = Color.WHITE
         add(colourVisual)
 
         colourID = JLabel("....................................")
@@ -103,16 +104,16 @@ class MainWindow : JFrame(), ActionListener {
         redNumber1.foreground = Color.WHITE
         add(redNumber1)
 
-        redPLus = JButton("<")
-        redPLus.bounds = Rectangle(25,275,40,50)
+        redPLus = JButton("+")
+        redPLus.bounds = Rectangle(25, 275, 40, 50)
         redPLus.font = defaultFont
         redPLus.background = Color.RED
         redPLus.foreground = Color.WHITE
         redPLus.addActionListener(this)     // Handle any clicks
         add(redPLus)
 
-        redMinus = JButton(">")
-        redMinus.bounds = Rectangle(75,275,40,50)
+        redMinus = JButton("-")
+        redMinus.bounds = Rectangle(75, 275, 40, 50)
         redMinus.font = defaultFont
         redMinus.background = Color.RED
         redMinus.foreground = Color.WHITE
@@ -134,16 +135,16 @@ class MainWindow : JFrame(), ActionListener {
         greenNumber3.foreground = Color.WHITE
         add(greenNumber3)
 
-        greenPlus = JButton("<")
-        greenPlus.bounds = Rectangle(195,275,40,50)
+        greenPlus = JButton("+")
+        greenPlus.bounds = Rectangle(195, 275, 40, 50)
         greenPlus.font = defaultFont
         greenPlus.background = Color.GREEN
         greenPlus.foreground = Color.WHITE
         greenPlus.addActionListener(this)     // Handle any clicks
         add(greenPlus)
 
-        greenMinus = JButton(">")
-        greenMinus.bounds = Rectangle(245,275,40,50)
+        greenMinus = JButton("-")
+        greenMinus.bounds = Rectangle(245, 275, 40, 50)
         greenMinus.font = defaultFont
         greenMinus.background = Color.GREEN
         greenMinus.foreground = Color.WHITE
@@ -165,16 +166,16 @@ class MainWindow : JFrame(), ActionListener {
         blueNumber2.foreground = Color.WHITE
         add(blueNumber2)
 
-        bluePlus = JButton("<")
-        bluePlus.bounds = Rectangle(365,275,40,50)
+        bluePlus = JButton("+")
+        bluePlus.bounds = Rectangle(365, 275, 40, 50)
         bluePlus.font = defaultFont
         bluePlus.background = Color.BLUE
         bluePlus.foreground = Color.WHITE
         bluePlus.addActionListener(this)     // Handle any clicks
         add(bluePlus)
 
-        blueMinus = JButton(">")
-        blueMinus.bounds = Rectangle(415,275,40,50)
+        blueMinus = JButton("-")
+        blueMinus.bounds = Rectangle(415, 275, 40, 50)
         blueMinus.font = defaultFont
         blueMinus.background = Color.BLUE
         blueMinus.foreground = Color.WHITE
@@ -187,36 +188,66 @@ class MainWindow : JFrame(), ActionListener {
      * Handle any UI events (e.g. button clicks)
      */
     override fun actionPerformed(e: ActionEvent?) {
+        var redVAL = redNumber1.text.toInt()
+        var blueVAL = blueNumber2.text.toInt()
+        var greenVAL = greenNumber3.text.toInt()
+
         when (e?.source) {
 
-              redPLus -> {
-                  redNumber1.text = redNumber1.text.toInt().inc().toString()
-                  if(redNumber1.text.toInt() > 255)redNumber1.text = "0"
-              }
-              redMinus -> {
-                  redNumber1.text = redNumber1.text.toInt().dec().toString()
-                  if(redNumber1.text.toInt() < 0)redNumber1.text = "255"
-              }
-              greenPlus -> {
-                  greenNumber3.text = greenNumber3.text.toInt().inc().toString()
-                  if(greenNumber3.text.toInt() > 255)greenNumber3.text = "0"
-              }
-              greenMinus -> {
-                  greenNumber3.text = greenNumber3.text.toInt().dec().toString()
-                  if(greenNumber3.text.toInt() < 0)greenNumber3.text = "255"
-              }
-              bluePlus -> {
-                  blueNumber2.text = blueNumber2.text.toInt().inc().toString()
-                  if(blueNumber2.text.toInt() > 255)blueNumber2.text = "0"
-              }
-              blueMinus -> {
-                  blueNumber2.text = blueNumber2.text.toInt().dec().toString()
-                  if(blueNumber2.text.toInt() < 0)blueNumber2.text = "255"
-              }
+            redPLus -> {
+                redNumber1.text = redNumber1.text.toInt().inc().toString()
+                if (redNumber1.text.toInt() > 255) redNumber1.text = "0"
+            }
 
+            redMinus -> {
+                redNumber1.text = redNumber1.text.toInt().dec().toString()
+                if (redNumber1.text.toInt() < 0) redNumber1.text = "255"
+            }
 
+            greenPlus -> {
+                greenNumber3.text = greenNumber3.text.toInt().inc().toString()
+                if (greenNumber3.text.toInt() > 255) greenNumber3.text = "0"
+            }
+
+            greenMinus -> {
+                greenNumber3.text = greenNumber3.text.toInt().dec().toString()
+                if (greenNumber3.text.toInt() < 0) greenNumber3.text = "255"
+            }
+
+            bluePlus -> {
+                blueNumber2.text = blueNumber2.text.toInt().inc().toString()
+                if (blueNumber2.text.toInt() > 255) blueNumber2.text = "0"
+            }
+
+            blueMinus -> {
+                blueNumber2.text = blueNumber2.text.toInt().dec().toString()
+                if (blueNumber2.text.toInt() < 0) blueNumber2.text = "255"
+            }
         }
+        updateUi()
     }
 
+    fun updateUi(){
+        var redVAL = redNumber1.text.toInt()
+        var blueVAL = blueNumber2.text.toInt()
+        var greenVAL = greenNumber3.text.toInt()
+        colourVisual.background = Color(redVAL, greenVAL, blueVAL)
+    }
+
+
+    override fun keyTyped(e: KeyEvent?) {
+      
+    }
+
+    override fun keyPressed(e: KeyEvent?) {
+
+      if (e?.keyCode == KeyEvent.VK_ENTER) {
+          updateUi()
+      }
+    }
+
+    override fun keyReleased(e: KeyEvent?) {
+
+    }
 }
 
