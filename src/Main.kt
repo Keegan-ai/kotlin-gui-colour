@@ -236,18 +236,21 @@ class MainWindow : JFrame(), ActionListener, KeyListener {
 
 
     override fun keyTyped(e: KeyEvent?) {
-      
+        println("Key Typed: ${e?.keyChar}")
     }
 
     override fun keyPressed(e: KeyEvent?) {
 
-      if (e?.keyCode == KeyEvent.VK_ENTER) {
-          updateUi()
-      }
+        println("Key Pressed: ${e?.keyCode}")
+        if (e?.keyCode == KeyEvent.VK_ENTER)
+            println("Letter key")
+      //if (e?.keyCode == KeyEvent.VK_ENTER) {
+      //    updateUi()
+      //}
     }
 
     override fun keyReleased(e: KeyEvent?) {
-
+        println("Key released: ${e?.keyCode} ")
     }
 }
 
